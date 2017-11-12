@@ -10,6 +10,8 @@ This tool is built to be used with kiosk printing mode in chrome. To launch chro
 
 `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk-printing --app=http://localhost:3000/`
 
+WARNING THIS WILL BYPASS YOUR PRINT DIALOG. USE WITH CAUTION.
+
 ----
 
 UI is incomplete.
