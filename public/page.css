@@ -1,0 +1,153 @@
+
+body{
+  padding: 1rem;
+  background-color: #f1f1f1;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  counter-reset: section;
+  font-family: 'Roboto Mono', monospace !important;
+}
+
+.command{
+  color: #6FCF97;
+}
+
+.scrape{
+  color: #BDBDBD;
+}
+
+.pause{
+  color: #BDBDBD;
+}
+
+.pause:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.status{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.working{
+  /*align-self: flex-start;*/
+  /*width: 100px;*/
+}
+
+.printed{
+  align-self: flex-end;
+  /*width: 100px;*/
+}
+
+.page{
+  background-color: white;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+  /*border: 1px solid rgba(0, 0, 0, 0.05);*/
+  padding: 0;
+  margin: 1px;
+  width: 11in;
+  height: 8.5in;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  /*box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);*/
+  overflow: hidden;
+}
+
+.itemText{
+  max-width: 110mm;
+  width: 90%;
+  padding: 10pt;
+  padding-top: 20pt;
+  padding-bottom: 40pt;
+  background-color: white;
+  flex: 0 0 auto;
+}
+
+.itemText p {
+  margin: 0;
+  font-size: 8pt;
+  letter-spacing: .3px;
+  color: #5f5f5f;
+}
+
+.itemText a {
+  text-decoration: none;
+  margin: 0;
+  font-size: 8pt;
+  letter-spacing: .3px;
+}
+
+.image{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+img{
+  max-width: 100%;
+  max-height: 90%;
+}
+
+.left{
+  width: 5.5in;
+  height: 8.5in;
+  padding: 1rem;
+    box-sizing: border-box;
+  /*border-right: 1px dashed rgba(0, 0, 0, 0.5);*/
+  float: left;
+}
+
+.right{
+  width: 5.5in;
+  height: 8.5in;
+  float: left;
+  padding: 1rem;
+    box-sizing: border-box;
+  /*border-right: 1px dotted rgba(0, 0, 0, 0.05);*/
+}
+
+@media print {
+    @page {
+        size: 11in 8.5in landscape;
+        margin: 1rem;
+    }
+
+    body{
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .status, .scrape, .command{
+      display: none;
+    }
+
+    .page{
+      margin: 0;
+      padding: 0;
+      box-sizing: content-box;
+      box-shadow: none;
+    }
+
+    div > .page{
+      /*background-color: green;*/
+      display: inherit;;
+      /*USE THIS TO ONLY PRINT FIRST PAGE*/
+    }
+
+    div > .page ~ .page {
+      display: none;
+      /*background-color: white;*/
+    }
+}

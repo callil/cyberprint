@@ -1,0 +1,20 @@
+{
+  "name": "cyberprint",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.1.0",
+    "react-animated-dots": "^1.0.0",
+    "react-dom": "^16.1.0",
+    "react-height": "^3.0.0",
+    "react-markdown": "^2.5.1",
+    "react-scripts": "1.0.17",
+    "styled-components": "^2.2.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
