@@ -8,8 +8,9 @@ class LinkLayout extends Component {
       <div className='image'>
         <img src={this.props.image} alt='' />
         <div className='itemText'>
-          <p className='imageTitle'>{this.props.title}</p>
-          <a href="src" className='desc'>{this.props.url}</a>
+          <p className='imageTitle'>{'http://are.na/block/' + this.props.id}</p>
+          {/* <p className='imageTitle'>{this.props.title}</p>
+          <a href="src" className='desc'>{this.props.url}</a> */}
         </div>
         {/* <p>{this.state.body}</p> */}
       </div>

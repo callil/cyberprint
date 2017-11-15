@@ -4,12 +4,10 @@
   "private": true,
   "dependencies": {
     "react": "^16.1.0",
-    "react-animated-dots": "^1.0.0",
     "react-dom": "^16.1.0",
-    "react-height": "^3.0.0",
     "react-markdown": "^2.5.1",
     "react-scripts": "1.0.17",
-    "styled-components": "^2.2.3"
+    "react-textfit": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

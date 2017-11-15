@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Dot } from 'react-animated-dots';
 import config from './config'
 import ImageLayout from './components/ImageLayout'
 import TextLayout from './components/TextLayout'
@@ -10,8 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://www.are.na/callil-capuozzo/test-print',
-      channel: !this.props.URICurrentChannel ? 'test-print' : this.props.URICurrentChannel,
+      url: 'https://www.are.na/melanie-hoff/cybernetics-conference-map',
+      channel: !this.props.URICurrentChannel ? 'killer-quotes' : this.props.URICurrentChannel,
       output: [
         {
           text: 'loading next dyptich... ',
@@ -20,6 +19,7 @@ class App extends Component {
       ],
       printed: [],
       collected: [],
+      response: [],
       print: false,
       currentPage: [
         {
@@ -28,20 +28,17 @@ class App extends Component {
         }
       ],
       printed:0,
+      currentChannels: {},
     }
   }
 
   componentDidMount = () => {
     this.getArenaChannel(this.state.channel)
-    console.log('print here')
     setInterval(this.interval, 30000)
   }
 
   interval = () => {
-    // console.log('constructing dyptich')
-    // console.log(this.state.collected.length)
     this.getArenaChannel(this.state.channel)
-    console.log('print here')
     this.state.print ? setTimeout(window.print() , 1000) : console.log('not printing right now...')
   }
 
@@ -86,40 +83,71 @@ class App extends Component {
     return (
       <div className={'page'} key={index}>
         <div className={'left'}>
+          <p className='title'>{left.title + '\nadded by ' + left.user}</p>
           {this.makeSpread(left)}
         </div>
+        <div className='split'></div>
         <div className={'right'}>
+          <p className='title'>{right.title + '\nadded by ' + right.user}</p>
           {this.makeSpread(right)}
         </div>
       </div>
     )
   }
 
+  getConnections = (block) => {
+    let connections
+    const getChannels = fetch(`${config.apiBase}/blocks/${block}/channels`)
+    getChannels.then(resp => resp.json()).then(response => {
+        connections = response.channels
+    })
+  }
+
   getArenaChannel = (channel) => {
     this.addScrape('checking are.na', 'command')
+
     const getItems = fetch(`${config.apiBase}/channels/${channel}/contents`)
       getItems.then(resp => resp.json()).then(response => {
         let items = response.contents.filter(function(item){
           return item.class === 'Image' || item.class === 'Text' || item.class === 'Link'
         })
 
-        if (response.contents.length !== this.state.collected.length) {
+        if (response.contents.length !== this.state.response.length) {
+          console.log(response.contents.length)
+          console.log(this.state.collected.length)
           this.addScrape('got new items', 'command')
           let collected = items.map((item) => {
             if(item.class === 'Image'){
               this.addScrape(item.title, 'text')
-              return item = {url: item.image.original.url, title: item.generated_title, id: item.id, type: item.class}
+              return item = {
+                url: item.image.original.url,
+                title: item.generated_title,
+                id: item.id,
+                type: item.class,
+                user: item.connected_by_username,}
             } else if (item.class === 'Text') {
               this.addScrape(item.title, 'text')
-              return item = {content: item.content, title: item.generated_title, id: item.id, type: item.class}
+              let channels = this.getConnections(item.id)
+              return item = {
+                content: item.content,
+                title: item.generated_title,
+                id: item.id,
+                type: item.class,
+                user: item.connected_by_username}
             } else if (item.class === 'Link') {
               this.addScrape(item.title, 'text')
-              return item = {url: item.source.url, image: item.image.original.url, title: item.generated_title, id: item.id, type: item.class}
+              let channels = this.getConnections(item.id)
+              return item = {
+                url: item.source.url,
+                image: item.image.original.url,
+                title: item.generated_title,
+                id: item.id,
+                type: item.class,
+                user: item.connected_by_username}
             } else {
               return undefined
             }
           })
-          // this.addScrape(this.state.collected[random], 'image')
           this.setState({collected: collected, loaded: true, pageCount: collected.length+this.state.pageCount, response: response.contents});
           this.createDip()
         } else {
@@ -134,9 +162,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className={'status'}>
-          <p className={'working'}>{'working'}<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot> <span className={'pause'} onClick={(e) => this.setState({print: !this.state.print})}>{this.state.print ? '(pause)' : '(start printing)'}</span></p>
+          <p className={'working'}>{'working...'}<span className={'pause'} onClick={(e) => this.setState({print: !this.state.print})}>{this.state.print ? '(pause)' : '(start printing)'}</span></p>
           <p className={'printed command'}>{'pages printed ' + this.state.printed}</p>
-
         </div>
         {this.state.output.map((item, index) => {
           if(item.type === 'text'){
