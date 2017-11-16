@@ -17,6 +17,7 @@ body{
 p{
   margin: 0px;
   padding: 0px;
+  word-break: break-all;
 }
 
 .App{
@@ -42,6 +43,7 @@ p{
 
 .command{
   color: #6FCF97;
+  padding-top: 1rem;
 }
 
 .scrape{
@@ -78,7 +80,7 @@ p{
   background-color: white;
   position: relative;
   box-sizing: border-box;
-  page-break-after: always;
+  /*page-break-after: always;*/
   /*border: 1px solid rgba(0, 0, 0, 0.05);*/
   padding: 0;
   margin: 1px;
@@ -104,6 +106,15 @@ p{
   font-size: 12px;
   letter-spacing: .3px;
   color: #BDBDBD;
+  transform: rotate(90deg);
+  left: 400px;
+  position: absolute;
+}
+
+.left .itemText{
+  transform: rotate(90deg);
+  left: 400px;
+  position: absolute;
 }
 
 .itemText a {
@@ -159,7 +170,7 @@ img{
 
 .split{
   width: 1px;
-  height: 8.5in;
+  height: 8in;
   position: absolute;
   left: 5.5in;
   border-right: 1px dashed rgba(0, 0, 0, 0.5);
@@ -168,7 +179,7 @@ img{
 @media print {
     @page {
         size: 11in 8.5in landscape;
-        margin: 1rem;
+        margin: 0px;
     }
 
     body{
@@ -185,6 +196,7 @@ img{
       padding: 0;
       box-sizing: content-box;
       box-shadow: none;
+      overflow: hidden;
     }
 
     div > .page{
