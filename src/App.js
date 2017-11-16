@@ -5,6 +5,8 @@ import TextLayout from './components/TextLayout'
 import LinkLayout from './components/LinkLayout'
 import './App.css';
 
+import notes from './notes.png'
+
 let conn = []
 
 class App extends Component {
@@ -126,15 +128,15 @@ class App extends Component {
         <div className='split'></div>
         <div className='draw'>draw</div>
         <div className={'right'}>
-          <p>draw</p>
+          <img src={notes}/>
         </div>
       </div>
       <div className={'page'} key={index}>
         <div className={'left'}>
-          <p className='title'>{left.title + '\nadded by ' + left.user}</p>
-          {this.makeSpread(left)}
+          <p className='title'>{right.title + '\nadded by ' + right.user}</p>
+          {this.makeSpread(right)}
           <div className='connections'>
-            <p>{left.connections.length + ' connections'}</p>
+            <p>{right.connections.length + ' connections'}</p>
             {left.connections.map((item, key) => {
               return <p key={key+item.id}>{item.title + '\nadded by ' + item.user.username}</p>
             })}
@@ -143,7 +145,7 @@ class App extends Component {
         <div className='split'></div>
         <div className='draw'>draw</div>
         <div className={'right'}>
-          <p>draw</p>
+          <img src={notes}/>
         </div>
       </div>
     </div>

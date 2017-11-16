@@ -126,8 +126,8 @@ p{
 }
 
 img{
-  max-width: 90%;
-  max-height: 80%;
+  max-width: 99%;
+  max-height: 99%;
 }
 
 .spread{
@@ -183,6 +183,9 @@ img{
   /*width: 140mm;*/
   /*padding-left: rem;*/
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /*border-right: 1px dotted rgba(0, 0, 0, 0.05);*/
 }
 
