@@ -111,6 +111,7 @@ class App extends Component {
       right = item.right
     })
     return (
+      <div className={'spread'}>
       <div className={'page'} key={index}>
         <div className={'left'}>
           <p className='title'>{left.title + '\nadded by ' + left.user}</p>
@@ -123,17 +124,29 @@ class App extends Component {
           </div>
         </div>
         <div className='split'></div>
+        <div className='draw'>draw</div>
         <div className={'right'}>
-          <p className='title'>{right.title + '\nadded by ' + right.user}</p>
-          {this.makeSpread(right)}
+          <p>draw</p>
+        </div>
+      </div>
+      <div className={'page'} key={index}>
+        <div className={'left'}>
+          <p className='title'>{left.title + '\nadded by ' + left.user}</p>
+          {this.makeSpread(left)}
           <div className='connections'>
-            <p>{right.connections.length + ' connections'}</p>
-            {right.connections.map((item, key) => {
+            <p>{left.connections.length + ' connections'}</p>
+            {left.connections.map((item, key) => {
               return <p key={key+item.id}>{item.title + '\nadded by ' + item.user.username}</p>
             })}
           </div>
         </div>
+        <div className='split'></div>
+        <div className='draw'>draw</div>
+        <div className={'right'}>
+          <p>draw</p>
+        </div>
       </div>
+    </div>
     )
   }
 

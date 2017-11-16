@@ -27,7 +27,7 @@ div {
 p{
   margin: 0px;
   padding: 0px;
-  word-break: break-all;
+  /*word-break: break-all;*/
 }
 
 .App{
@@ -53,7 +53,7 @@ p{
 
 .command{
   color: #6FCF97;
-  padding-top: 1rem;
+  /*padding-top: 1rem;*/
 }
 
 .scrape{
@@ -130,6 +130,12 @@ img{
   max-height: 80%;
 }
 
+.spread{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .page{
   background-color: white;
   position: relative;
@@ -146,6 +152,10 @@ img{
   margin-top: 20px;
   /*box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);*/
   overflow: hidden;
+}
+
+.page:nth-of-type(1){
+  margin-right: 1rem;
 }
 
 .left{
@@ -205,6 +215,13 @@ img{
   color: #ccc;
 }
 
+.draw{
+  width: 5.5in;
+  height: 8.5in;
+  float: left;
+  display: none;
+}
+
 @page {
   size: Letter landscape;
   margin: 0;
@@ -220,9 +237,10 @@ img{
       padding: 0;
       margin: 0;
     }
+
      html, body {
-         border: 1px solid white;
-         height: 99%;
+         /*border: 1px solid white;*/
+         /*height: 99%;*/
          page-break-after: avoid;
          page-break-before: avoid;
      }
@@ -236,6 +254,12 @@ img{
       display: none;
     }
 
+    .spread{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
     .page{
       margin: 0;
       padding: 0;
@@ -243,14 +267,24 @@ img{
       overflow: hidden;
     }
 
-    div > .page{
+    /*.page
+
+    .page:nth-of-type(1){
+        border:5px solid red;
+    }
+    .page:nth-of-type(2){
+        border:5px solid red;
+    }*/
+
+    div > .spread{
       /*background-color: green;*/
       display: inherit;;
       /*USE THIS TO ONLY PRINT FIRST PAGE*/
     }
 
-    div > .page ~ .page {
+    div > .spread ~ .spread {
       display: none;
       /*background-color: white;*/
     }
+
 }
