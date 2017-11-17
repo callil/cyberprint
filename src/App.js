@@ -131,7 +131,7 @@ class App extends Component {
           <img src={notes}/>
         </div>
       </div>
-      <div className={'page'} key={index}>
+      <div className={'page second'} key={index}>
         <div className={'left'}>
           <p className='title'>{right.title + '\nadded by ' + right.user}</p>
           {this.makeSpread(right)}

@@ -270,6 +270,11 @@ img{
       overflow: hidden;
     }
 
+
+    .second{
+      transform: rotate(180deg);
+    }
+
     /*.page
 
     .page:nth-of-type(1){
