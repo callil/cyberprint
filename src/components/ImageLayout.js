@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+
+
 class ImageLayout extends Component {
   constructor(props) {
       super(props);
@@ -21,7 +23,8 @@ class ImageLayout extends Component {
       <div className='image'>
         <img alt='' className='to-print' onLoad={this.onImgLoad} src={this.props.url}/>
         <div className='itemText'>
-          <p className='imageTitle'>{'http://are.na/block/' + this.props.id}</p>
+
+          {/* <p className='imageTitle'><img className='logo' src={logo} />{'http://are.na/block/' + this.props.id}</p> */}
           {/* <a href="src" className='desc'>{this.props.url}</a> */}
         </div>
       </div>

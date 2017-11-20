@@ -5,7 +5,10 @@ import TextLayout from './components/TextLayout'
 import LinkLayout from './components/LinkLayout'
 import './App.css';
 
-import notes from './notes.png'
+import notes from './Group.png'
+import q from './question_dump.json'
+import logo from './arenamark.svg'
+
 
 let conn = []
 
@@ -13,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      channel: 'test-print',
+      channel: 'print-are-na-cybernetics-conference',
       output: [
         {
           text: 'loading next dyptich... ',
@@ -36,7 +39,7 @@ class App extends Component {
 
   componentDidMount = () => {
     this.getArenaChannel(this.state.channel)
-    setInterval(this.interval, 30000)
+    setInterval(this.interval, 200000)
   }
 
   interval = () => {
@@ -93,6 +96,10 @@ class App extends Component {
         return (
           <ImageLayout url={item.url} id={item.id} title={item.title}/>
         )
+      } else if (item.type === 'Attachment') {
+        return (
+          <ImageLayout url={item.url} id={item.id} title={item.title}/>
+        )
       } else if (item.type === 'Text') {
         return (
           <TextLayout className='text' content={item.content} id={item.id} title={item.title}/>
@@ -102,7 +109,20 @@ class App extends Component {
           <LinkLayout className='text' id={item.id} title={item.title} url={item.url} image={item.image} />
         )
       }
+  }
 
+  getQuestion = () => {
+    let random = Math.floor(Math.random() * (q.length - 0) + 0)
+    let obj = {}
+    q[random].map((item) => {
+      obj = item
+    })
+    return (
+      <div className={'questions'}>
+        <p className={'primary'}>{obj.questions[0]}</p>
+        <p className={'secondary'}>{'― ' + obj.title + ' by ' + obj.authors[0].fl}</p>
+      </div>
+    )
   }
 
   makePage = (item, index) => {
@@ -113,10 +133,15 @@ class App extends Component {
       right = item.right
     })
     return (
-      <div className={'spread'}>
-      <div className={'page'} key={index}>
+      <div className={'spread'} key={index}>
+      <div className={'page'} >
         <div className={'left'}>
-          <p className='title'>{left.title + '\nadded by ' + left.user}</p>
+          <div className='title'>
+            <img className='logo' src={logo} />
+            <p className=''>{'http://are.na/block/' + left.id}</p>
+            <p className=''>{left.title + ' added by ' + left.user}</p>
+          </div>
+
           {this.makeSpread(left)}
           <div className='connections'>
             <p>{left.connections.length + ' connections'}</p>
@@ -126,14 +151,23 @@ class App extends Component {
           </div>
         </div>
         <div className='split'></div>
-        <div className='draw'>draw</div>
         <div className={'right'}>
-          <img src={notes}/>
+          <img className={'note'} src={notes}/>
+          {this.getQuestion()}
         </div>
       </div>
-      <div className={'page second'} key={index}>
+      <div className={'page second'}>
         <div className={'left'}>
-          <p className='title'>{right.title + '\nadded by ' + right.user}</p>
+          <img className={'note'} src={notes}/>
+          {this.getQuestion()}
+        </div>
+        <div className='split'></div>
+        <div className={'right'}>
+          <div className='title'>
+            <img className='logo' src={logo} />
+            <p className=''>{'http://are.na/block/' + left.id}</p>
+            <p className=''>{left.title + ' added by ' + left.user}</p>
+          </div>
           {this.makeSpread(right)}
           <div className='connections'>
             <p>{right.connections.length + ' connections'}</p>
@@ -141,11 +175,6 @@ class App extends Component {
               return <p key={key+item.id}>{item.title + '\nadded by ' + item.user.username}</p>
             })}
           </div>
-        </div>
-        <div className='split'></div>
-        <div className='draw'>draw</div>
-        <div className={'right'}>
-          <img src={notes}/>
         </div>
       </div>
     </div>
@@ -158,7 +187,7 @@ class App extends Component {
     const getItems = fetch(`${config.apiBase}/channels/${channel}/contents`)
       getItems.then(resp => resp.json()).then(response => {
         let items = response.contents.filter(function(item){
-          return item.class === 'Image' || item.class === 'Text' || item.class === 'Link'
+          return item.class === 'Image' || item.class === 'Text' || item.class === 'Link' || item.class === 'Attachment'
         })
 
         if (response.contents.length !== this.state.response.length) {
@@ -166,6 +195,16 @@ class App extends Component {
 
           let collected = items.map((item) => {
             if(item.class === 'Image'){
+              this.addScrape(item.generated_title, 'text')
+              return item = {
+                url: item.image.original.url,
+                title: item.generated_title,
+                id: item.id,
+                type: item.class,
+                user: item.connected_by_username,
+                printed: 0,
+              }
+            } else if(item.class === 'Attachment'){
               this.addScrape(item.generated_title, 'text')
               return item = {
                 url: item.image.original.url,

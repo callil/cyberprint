@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "html2canvas": "^0.5.0-beta4",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-markdown": "^2.5.1",
